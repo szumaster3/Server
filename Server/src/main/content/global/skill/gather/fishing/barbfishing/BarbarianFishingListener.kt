@@ -193,6 +193,11 @@ class BarbarianFishingListener : InteractionListener {
     private val baitItems = listOf(
         Items.FISHING_BAIT_313,
         Items.FEATHER_314,
+        Items.STRIPY_FEATHER_10087,
+        Items.RED_FEATHER_10088,
+        Items.BLUE_FEATHER_10089,
+        Items.YELLOW_FEATHER_10090,
+        Items.ORANGE_FEATHER_10091,
         Items.FISH_OFFCUTS_11334,
         Items.ROE_11324,
         Items.CAVIAR_11326
