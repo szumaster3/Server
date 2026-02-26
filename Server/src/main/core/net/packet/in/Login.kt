@@ -175,7 +175,6 @@ object Login {
         var accountLimit = ServerConstants.DAILY_ACCOUNT_LIMIT
 
         val f = File(ServerConstants.CONFIG_PATH!!)
-            .resolve("for_online")
             .resolve("account_limit_exceptions.conf")
 
         if (f.exists()) {
