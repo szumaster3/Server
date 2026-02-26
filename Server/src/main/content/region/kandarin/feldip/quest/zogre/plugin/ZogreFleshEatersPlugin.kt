@@ -263,9 +263,10 @@ class ZogreFleshEatersPlugin : InteractionListener {
         }
 
         onUseWith(IntType.GROUND_ITEM, ZogreUtils.STRANGE_POTION, Items.CUP_OF_TEA_4838) { player, used, _ ->
+            val slot = used.asItem().slot
             lock(player, 2)
             animate(player, Animations.PUT_OBJECT_ON_TABLE_537)
-            replaceSlot(player, used.asItem().index, Item(Items.SAMPLE_BOTTLE_3377))
+            replaceSlot(player, slot, Item(Items.SAMPLE_BOTTLE_3377))
             setAttribute(player, ZogreUtils.SITHIK_TURN_INTO_OGRE, true)
             sendItemDialogue(player, ZogreUtils.STRANGE_POTION, "You pour some of the potion into the cup.")
             return@onUseWith true

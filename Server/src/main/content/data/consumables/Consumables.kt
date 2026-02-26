@@ -265,6 +265,7 @@ enum class Consumables {
     HALF_FULL_WINE_JUG(Drink(intArrayOf(Items.HALF_FULL_WINE_JUG_1989, Items.JUG_1935), HealingEffect(7))),
     JUG_OF_BAD_WINE(Drink(intArrayOf(Items.JUG_OF_BAD_WINE_1991, Items.JUG_1935), SkillEffect(Skills.ATTACK, -3.0, 0.0))),
     CUP_OF_TEA(Drink(intArrayOf(Items.CUP_OF_TEA_712, Items.EMPTY_CUP_1980), MultiEffect(HealingEffect(3), SkillEffect(Skills.ATTACK, 3.0, 0.0)), "Aaah, nothing like a nice cuppa tea!")),
+    CUP_OF_TEA_2(Drink(intArrayOf(Items.CUP_OF_TEA_1978, Items.EMPTY_CUP_1980), MultiEffect(HealingEffect(3), SkillEffect(Skills.ATTACK, 3.0, 0.0)), "Aaah, nothing like a nice cuppa tea!")),
     CUP_OF_TEA_NETTLE(Drink(intArrayOf(Items.CUP_OF_TEA_4242, Items.EMPTY_CUP_1980), EnergyEffect(10))),
     CUP_OF_TEA_MILKY_NETTLE(Drink(intArrayOf(Items.CUP_OF_TEA_4243, Items.EMPTY_CUP_1980), EnergyEffect(10))),
     NETTLE_WATER(Drink(intArrayOf(Items.NETTLE_WATER_4237, Items.BOWL_1923), HealingEffect(1))),
