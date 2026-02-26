@@ -30,6 +30,71 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
 
         /*
+         * Command for finding all object with given name.
+         */
+
+        define(
+            name = "findobjectname",
+            privilege = Privilege.ADMIN,
+            usage = "::findobjectname <name>",
+            description = "Scan regions for all instances of objects matching the given name."
+        ) { player, args ->
+
+            val nameQuery = args
+                ?.drop(1)
+                ?.joinToString(" ")
+                ?.takeIf { it.isNotBlank() }
+                ?.lowercase()
+                ?: run {
+                    reject(player, "Usage: ::findobjectname <name>")
+                    return@define
+                }
+
+            val exportDir = File("dumps")
+            if (!exportDir.exists()) exportDir.mkdirs()
+
+            val timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("dd-MM_HH-mm"))
+
+            val dump = File(exportDir, "objects_name=${nameQuery}_$timestamp.txt")
+
+            GlobalScope.launch {
+                var found = 0
+
+                dump.bufferedWriter().use { writer ->
+                    for (region in RegionManager.regionCache.values) {
+                        for (z in 0..3) {
+                            val plane = region.planes[z] ?: continue
+                            val grid = plane.objects ?: continue
+
+                            for (x in 0 until RegionPlane.REGION_SIZE) {
+                                for (y in 0 until RegionPlane.REGION_SIZE) {
+
+                                    val scenery = grid[x][y] ?: continue
+                                    val def = SceneryDefinition.forId(scenery.id) ?: continue
+                                    val defName = def.name?.lowercase() ?: continue
+
+                                    if (!defName.contains(nameQuery)) continue
+
+                                    val loc = scenery.location
+
+                                    writer.write(
+                                        "[${scenery.id}] - (${loc.x}, ${loc.y}, ${loc.z}) " +
+                                                "[region=${region.id}, name=${def.name}]\n"
+                                    )
+
+                                    found++
+                                }
+                            }
+                        }
+                    }
+                }
+
+                player.debug("Saved $found objects matching '$nameQuery' -> ${dump.path}")
+            }
+        }
+
+        /*
          * Command for finding all object with given id.
          */
 
@@ -238,71 +303,35 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
             GlobalScope.launch {
                 try {
-                    val quests = core.game.node.entity.player.link.quest.QuestRepository.getQuests().values
+                    val quests = core.game.node.entity.player.link.quest.QuestRepository
+                        .getQuests()
+                        .values
 
-                    val file = java.io.File("dumps/quests_dump.txt")
-                    file.parentFile.mkdirs()
-                    file.writeText("")
+                    val exportDir = File("dumps")
+                    if (!exportDir.exists()) exportDir.mkdirs()
 
-                    quests.forEach { _ ->
-                        file.appendText("\n")
+                    val file = File(exportDir, "quests_dump.txt")
+
+                    file.bufferedWriter().use { writer ->
+                        writer.write("=== QUEST DUMP ===\n")
+                        writer.write("Total quests: ${quests.size}\n\n")
+
+                        for (quest in quests) {
+                            writer.write("Name: ${quest.name}\n")
+                            writer.write("Index: ${quest.index}\n")
+                            writer.write("ButtonId: ${quest.buttonId}\n")
+                            writer.write("QuestPoints: ${quest.questPoints}\n")
+                            writer.write("Configs: ${quest.configs.joinToString(", ")}\n")
+                            writer.write("----------------------------------------\n")
+                        }
                     }
 
-                    player.debug("All quests have been dumped to: $file")
+                    player.debug("Dumped ${quests.size} quests -> ${file.path}")
+
                 } catch (e: Exception) {
                     player.debug("Error while dumping quests: ${e.message}")
+                    e.printStackTrace()
                 }
-            }
-        }
-
-        define(
-            name = "itemformodel",
-            privilege = Privilege.ADMIN,
-            usage = "::itemformodel <itemId>",
-            description = "Find item definitions that use the same interface model as the given item."
-        ) { player, args ->
-
-            val itemId = args?.getOrNull(1)?.toIntOrNull()
-
-            if (itemId == null) {
-                reject(player, "Usage: ::itemformodel <itemId>")
-                return@define
-            }
-
-            val baseDef = ItemDefinition.forId(itemId)
-            if (baseDef == null) {
-                reject(player, "Item definition $itemId not found.")
-                return@define
-            }
-
-            val baseModel = baseDef.interfaceModelId
-            if (baseModel == null) {
-                reject(player, "Item $itemId has no interface model.")
-                return@define
-            }
-
-            player.debug("[obj_$itemId] name=${baseDef.name} model=$baseModel")
-
-            GlobalScope.launch {
-
-                val matches = mutableListOf<String>()
-
-                for (id in 0 until Cache.getItemDefinitionsSize()) {
-                    val def = ItemDefinition.forId(id) ?: continue
-
-                    val model = def.interfaceModelId ?: continue
-                    if (model == baseModel) {
-                        matches.add("[obj_${def.id}] name=${def.name}")
-                    }
-                }
-
-                if (matches.isEmpty()) {
-                    player.debug("No items found using model $baseModel.")
-                    return@launch
-                }
-
-                player.debug("Items using model_$baseModel:")
-                matches.forEach { player.debug("---> $it") }
             }
         }
 
