@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[Windows] Model Viewer" type="JarApplication" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/Tools/Oculus v1.0.2.jar" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>
