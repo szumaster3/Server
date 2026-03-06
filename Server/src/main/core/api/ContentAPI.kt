@@ -376,7 +376,12 @@ fun <T> removeItem(
         Container.INVENTORY -> player.inventory.remove(it)
         Container.BANK -> player.bank.remove(it)
         Container.EQUIPMENT -> player.equipment.remove(it)
-        Container.BoB -> (player.familiarManager.familiar as? BurdenBeast)?.container?.remove(it) ?: false
+        Container.BoB -> {
+            if (player.familiarManager.hasFamiliar() && player.familiarManager.familiar.isBurdenBeast)
+                (player.familiarManager.familiar as BurdenBeast).container.remove(it)
+            else
+                false
+        }
     }
 }
 
@@ -400,7 +405,12 @@ fun addItem(
             Container.INVENTORY -> player.inventory
             Container.BANK -> player.bank
             Container.EQUIPMENT -> player.equipment
-            Container.BoB -> (player.familiarManager.familiar as BurdenBeast).container
+            Container.BoB -> {
+                if(player.familiarManager.hasFamiliar() && player.familiarManager.familiar.isBurdenBeast)
+                    (player.familiarManager.familiar as BurdenBeast).container
+                else
+                    return false
+            }
         }
 
     return cont.add(Item(id, amount))
@@ -444,23 +454,13 @@ fun addItemOrBank(
  * @param container The container to perform the replacement in (defaults to inventory).
  * @return The replaced item, or null if the replacement failed.
  */
-fun replaceSlot(
-    player: Player,
-    slot: Int,
-    item: Item,
-    currentItem: Item? = null,
-    container: Container = Container.INVENTORY,
-): Item? {
-    val cont =
-        when (container) {
-            Container.INVENTORY -> player.inventory
-            Container.EQUIPMENT -> player.equipment
-            Container.BANK -> player.bank
-            Container.BoB -> {
-                val beast = player.familiarManager.familiar as? BurdenBeast ?: return null
-                beast.container
-            }
-        }
+fun replaceSlot(player: Player, slot: Int, item: Item, currentItem: Item? = null, container: Container = Container.INVENTORY): Item? {
+    val cont = when (container) {
+        Container.INVENTORY -> player.inventory
+        Container.EQUIPMENT -> player.equipment
+        Container.BANK -> player.bank
+        Container.BoB -> (player.familiarManager.familiar as BurdenBeast).container
+    }
 
     if (item.id == 65535 || item.amount <= 0) {
         return cont.replace(null, slot)
@@ -474,23 +474,13 @@ fun replaceSlot(
         return cont.replace(item, slot)
     }
 
-    PlayerMonitor.log(
-        player,
-        LogType.DUPE_ALERT,
-        "Potential slot-replacement-based dupe attempt, slot: $slot, item: $item",
-    )
-
+    PlayerMonitor.log(player, LogType.DUPE_ALERT, "Potential slot-replacement-based dupe attempt, slot: $slot, item: $item")
     val other = when (container) {
         Container.INVENTORY -> Container.EQUIPMENT
-        Container.EQUIPMENT -> Container.INVENTORY
-        Container.BANK      -> return null
-        Container.BoB       -> Container.INVENTORY
+        else -> Container.INVENTORY
     }
-
-    if (removeItem(player, currentItem, other)) {
+    if (removeItem(player, currentItem, other))
         return cont.replace(item, slot)
-    }
-
     return null
 }
 
@@ -2306,30 +2296,29 @@ fun drainStatLevel(
  * @param container The container to remove the item from (default is Inventory).
  * @return True if the item was successfully removed, false otherwise.
  */
-fun <T> removeAll(
-    player: Player,
-    item: T,
-    container: Container = Container.INVENTORY,
-): Boolean {
+fun <T> removeAll(player: Player, item: T, container: Container = Container.INVENTORY): Boolean {
     item ?: return false
-
-    val id = when (item) {
+    val it = when (item) {
         is Item -> item.id
         is Int -> item
         else -> throw IllegalStateException("Invalid value passed as item")
     }
 
     return when (container) {
-        Container.EQUIPMENT ->
-            player.equipment.remove(Item(id, amountInEquipment(player, id)))
-
-        Container.BANK ->
-            player.bank.remove(Item(id, amountInBank(player, id)))
-
-        Container.INVENTORY ->
-            player.inventory.remove(Item(id, amountInInventory(player, id)))
-
-        Container.BoB -> TODO()
+        Container.EQUIPMENT -> player.equipment.remove(Item(it, amountInEquipment(player, it)))
+        Container.BANK -> {
+            val amountInPrimary = amountInBank(player, it)
+            player.bank.remove(Item(it, amountInPrimary))
+        }
+        Container.INVENTORY -> player.inventory.remove(Item(it, amountInInventory(player, it)))
+        Container.BoB -> {
+            if (player.familiarManager.hasFamiliar() && player.familiarManager.familiar.isBurdenBeast){
+                val cont = (player.familiarManager.familiar as BurdenBeast).container
+                cont.remove(Item(it, cont.getAmount(it)))
+            }
+            else
+                false
+        }
     }
 }
 

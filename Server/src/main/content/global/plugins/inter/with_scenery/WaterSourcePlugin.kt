@@ -112,6 +112,7 @@ class WaterSourcePlugin : InteractionListener {
         WATER_SKIN(intArrayOf(Items.WATERSKIN0_1831, Items.WATERSKIN1_1829, Items.WATERSKIN2_1827, Items.WATERSKIN3_1825), Items.WATERSKIN4_1823),
         FISHBOWL(intArrayOf(Items.FISHBOWL_6667), Items.FISHBOWL_6668),
         CUP(intArrayOf(Items.EMPTY_CUP_1980), Items.CUP_OF_WATER_4458),
+        KETTLE(intArrayOf(Items.KETTLE_7688), Items.FULL_KETTLE_7690),
         CLAY(intArrayOf(Items.CLAY_434), Items.SOFT_CLAY_1761, autofill = false),
         GOLDEN_BOWL(intArrayOf(Items.GOLD_BOWL_721), Items.GOLDEN_BOWL_723),
         BLESSED_GOLDEN_BOWL(intArrayOf(Items.BLESSED_GOLD_BOWL_722), Items.GOLDEN_BOWL_724),

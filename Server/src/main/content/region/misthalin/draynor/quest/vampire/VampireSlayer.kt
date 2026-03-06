@@ -64,8 +64,8 @@ class VampireSlayer : Quest(Quests.VAMPIRE_SLAYER, 30, 29, 3, Vars.VARP_QUEST_VA
             line(player, "I have spoken to Dr Harlow. He seemed terribly drunk, and", line++, true)
             line(player, "he kept asking me to buy him drinks.", line++, true)
             line++
-            line(player, "I have killed the Vampire, Count Draynor. Draynor Village is", line++)
-            line(player, "now safe!", line++)
+            line(player, "I have killed the Vampire, Count Draynor. Draynor Village is", line++, true)
+            line(player, "now safe!", line++, true)
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line, false)
         }
