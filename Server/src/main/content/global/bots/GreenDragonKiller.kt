@@ -36,15 +36,6 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
         val dragonLoc = arrayOf(southDragons, westDragons).random()
         val wildernessLine = ZoneBorders(3078, 3523, 3096, 3523)
         val bankZone = ZoneBorders(3092, 3489, 3094, 3493)
-        val forceChat = arrayOf(
-            "Bro, seriously?", "Ffs.", "Jesus christ.", "????", "Friendly!", "Get a life dude",
-            "Do you mind??? lol", "Lol.", "Kek.", "One sec burying all the bones.", "Yikes.", "Yeet",
-            "Ah shit, here we go again.", "Cmonnnn", "Plz", "Do you have nothing better to do?",
-            "Cmon bro pls", "I just need to get my prayer up bro jesus", "Reeeeeee", "I cant believe you've done this",
-            "Really m8", "Zomg", "Aaaaaaaaaaaaaaaaaaaaa", "Rofl.", "Oh god oh fuck oh shit", "....", ":|",
-            "A q p", "Hcim btw", "I hope the revenants kill your mum", "Wrap your ass titties", "Why do this",
-            "Bruh", "Straight sussin no cap fr fr", "This ain't bussin dawg", "Really bro?"
-        )
     }
 
     enum class State {
@@ -86,7 +77,6 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
         if (!bot.isActive || avoidPlayer) state = State.RUNNING
 
         checkFoodStockAndEat()
-        sendTrashTalk()
 
         when (state) {
             State.KILLING -> killingState()
@@ -282,13 +272,6 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
     private fun checkFoodStockAndEat() {
         if (bot.inventory.getAmount(food) < 3 && state == State.KILLING) state = State.TO_BANK
         scriptAPI.eat(food)
-    }
-
-    private fun sendTrashTalk() {
-        if (nextTalk-- <= 0) {
-            scriptAPI.sendChat(forceChat.random())
-            nextTalk = RandomFunction.random(10, 30)
-        }
     }
 
     override fun newInstance(): Script {
