@@ -13,13 +13,13 @@ import core.game.world.map.zone.ZoneRestriction
 import core.plugin.ClassScanner
 import core.plugin.Initializable
 
+private val SAFE_LOCATION: Location = Location.create(2750, 3507, 2)
+
 /**
  * Represents the Training Grounds activity.
  */
 @Initializable
 class CamelotTrainingRoomActivity : ActivityPlugin("Knight's training", true, false, true), MapArea {
-
-    private val safeLocation: Location = Location.create(2750, 3507, 2)
 
     init {
         ActivityManager.register(this)
@@ -27,11 +27,8 @@ class CamelotTrainingRoomActivity : ActivityPlugin("Knight's training", true, fa
     }
 
     override fun death(entity: Entity, killer: Entity): Boolean {
-        if (entity is Player) {
-            teleport(entity, safeLocation)
-            return true
-        }
-        return false
+        if (entity is Player) teleport(entity, SAFE_LOCATION)
+        return entity is Player
     }
 
     override fun areaEnter(entity: Entity) {
@@ -39,14 +36,13 @@ class CamelotTrainingRoomActivity : ActivityPlugin("Knight's training", true, fa
         if (entity !is Player) return
 
         setAttribute(entity, GameAttributes.PRAYER_LOCK, true)
-
         entity.hook(Event.PrayerDeactivated, SkillRestore.PrayerDeactivatedHook)
         entity.hook(Event.PrayerActivated, SkillRestore.PrayerActivatedHook)
 
         registerLogoutListener(entity, "Knight's training") { _ ->
             entity.unhook(SkillRestore.PrayerDeactivatedHook)
             entity.unhook(SkillRestore.PrayerActivatedHook)
-            teleport(entity, safeLocation)
+            teleport(entity, SAFE_LOCATION)
         }
     }
 
@@ -62,10 +58,11 @@ class CamelotTrainingRoomActivity : ActivityPlugin("Knight's training", true, fa
             GameAttributes.KW_BEGIN
         )
 
-        findLocalNPC(entity, CamelotTrainingRoomNPC().id)?.let { poofClear(it) }
+        CamelotTrainingRoomNPC().getIds().firstOrNull()?.let { id ->
+            findLocalNPC(entity, id)?.let { poofClear(it) }
+        }
 
         clearLogoutListener(entity, "Knight's training")
-
         entity.unhook(SkillRestore.PrayerActivatedHook)
         entity.unhook(SkillRestore.PrayerDeactivatedHook)
     }
@@ -77,7 +74,6 @@ class CamelotTrainingRoomActivity : ActivityPlugin("Knight's training", true, fa
         arrayOf(ZoneBorders(2752, 3502, 2764, 3513, 2, false))
 
     override fun newInstance(p: Player?): ActivityPlugin = CamelotTrainingRoomActivity()
-
     override fun getRestrictions(): Array<ZoneRestriction> = arrayOf(ZoneRestriction.CANNON, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS)
-    override fun getSpawnLocation(): Location = safeLocation
+    override fun getSpawnLocation(): Location = SAFE_LOCATION
 }

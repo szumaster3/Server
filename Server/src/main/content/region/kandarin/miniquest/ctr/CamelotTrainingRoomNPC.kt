@@ -18,11 +18,17 @@ import core.game.world.map.RegionManager.getLocalPlayers
 import core.plugin.Initializable
 import shared.consts.NPCs
 
+private const val SAFE_X = 2750
+private const val SAFE_Y = 3507
+private const val SAFE_Z = 2
+private const val MAX_TICKS_BEFORE_CLEAR = 5000
+
 /**
  * Represents a Knight NPC participating in the wave battles.
  */
 class CamelotTrainingRoomNPC : AbstractNPC {
-    var type: WaveTier? = null
+
+    var type: WaveTier? = WaveTier.forId(id)
     private var commenced = false
     var player: Player? = null
     private var timer = 0
@@ -37,45 +43,43 @@ class CamelotTrainingRoomNPC : AbstractNPC {
         this.isInvisible = false
     }
 
-    /**
-     * Called every game tick to manage NPC behavior.
-     */
+    init {
+        this.isWalks = true
+        this.isRespawn = false
+        this.isInvisible = false
+    }
+
     override fun handleTickActions() {
         super.handleTickActions()
-        player?.let {
-            if (!it.isActive || !getLocalPlayers(this).contains(it)) {
-                it.removeAttribute(GameAttributes.KW_SPAWN)
-                pulseManager.clear()
-                clear()
-            } else if (!properties.combatPulse.isAttacking) {
-                properties.combatPulse.attack(it)
-            }
+        player.takeIf { it!!.isActive && getLocalPlayers(this).contains(it) }?.let {
+            if (!properties.combatPulse.isAttacking) properties.combatPulse.attack(it)
+        } ?: run {
+            player?.removeAttribute(GameAttributes.KW_SPAWN)
+            pulseManager.clear()
+            clear()
         }
-        if (timer++ > 5000) {
+
+        if (timer++ > MAX_TICKS_BEFORE_CLEAR) {
             pulseManager.clear()
             poofClear(this)
         }
     }
 
-    /**
-     * Called when the NPC dies to handle transformation to the next wave.
-     */
     override fun finalizeDeath(killer: Entity?) {
         super.finalizeDeath(killer)
         if (killer == player) {
-            this.asNpc().isInvisible = true
-            (type ?: return poofClear(this)).transform(this, player)
+            this.isInvisible = true
+            type?.let { wave -> wave.transform(this, player) } ?: poofClear(this)
             timer = 0
         }
     }
 
-    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean = player == entity
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean =
+        player == entity
 
-    override fun canSelectTarget(target: Entity): Boolean = target is Player && target == player
+    override fun canSelectTarget(target: Entity): Boolean =
+        target is Player && target == player
 
-    /**
-     * Modifies damage based on combat style and conditions.
-     */
     override fun checkImpact(state: BattleState) {
         super.checkImpact(state)
         if (state.attacker is Player) {
@@ -93,7 +97,7 @@ class CamelotTrainingRoomNPC : AbstractNPC {
                 }
 
                 else -> {
-                    if (state.weapon.type != Weapon.WeaponType.DEFAULT) {
+                    state.weapon?.takeIf { it.type != Weapon.WeaponType.DEFAULT }?.let {
                         if (state.estimatedHit > -1) state.estimatedHit = 0
                         if (state.secondaryHit > -1) state.secondaryHit = 0
                     }
@@ -102,7 +106,8 @@ class CamelotTrainingRoomNPC : AbstractNPC {
         }
     }
 
-    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = CamelotTrainingRoomNPC(id, location, null)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
+        CamelotTrainingRoomNPC(id, location, (objects.firstOrNull() as? Player) ?: throw IllegalArgumentException("Player required"))
 
     override fun getIds(): IntArray = intArrayOf(
         NPCs.SIR_BEDIVERE_6177,
@@ -131,8 +136,7 @@ class CamelotTrainingRoomNPC : AbstractNPC {
         VI(NPCs.SIR_GAWAIN_6172),
         VII(NPCs.SIR_KAY_6171),
         VIII(NPCs.SIR_LANCELOT_6170),
-        IX(-1),
-        ;
+        IX(-1);
 
         /**
          * Transforms the current NPC into the next wave NPC or ends the training.
@@ -156,14 +160,16 @@ class CamelotTrainingRoomNPC : AbstractNPC {
 
                     if (newType == IX) {
                         player?.let {
-                            teleport(it, Location.create(2750, 3507, 2).transform(Direction.SOUTH))
+                            teleport(it, Location.create(SAFE_X, SAFE_Y, SAFE_Z).transform(Direction.SOUTH))
                             MerlinNPC.spawnMerlin(it)
                         }
                         npc.clear()
                     } else {
-                        npc.type = newType
-                        npc.transform(newType!!.id)
-                        npc.properties.combatPulse.attack(player)
+                        newType?.let {
+                            npc.type = it
+                            npc.transform(it.id)
+                            player?.let { p -> npc.properties.combatPulse.attack(p) }
+                        }
                     }
 
                     player?.unlock()
@@ -193,23 +199,15 @@ private class MerlinNPC(id: Int = 0, location: Location? = null) : AbstractNPC(i
     private var cleanTime = 0
     private var player: Player? = null
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = MerlinNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
+        MerlinNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.MERLIN_213)
 
-    /**
-     * Auto-cleans attributes and removes Merlin after a delay.
-     */
     override fun handleTickActions() {
         super.handleTickActions()
-        if (cleanTime++ > 300) {
-            removeAttributes(player!!, GameAttributes.KW_TIER, GameAttributes.KW_BEGIN)
-        }
-        poofClear(this)
+        player?.let { removeAttributes(it, GameAttributes.KW_TIER, GameAttributes.KW_BEGIN) }
+        if (cleanTime++ > 300) poofClear(this)
     }
 
     companion object {
@@ -218,27 +216,20 @@ private class MerlinNPC(id: Int = 0, location: Location? = null) : AbstractNPC(i
          */
         fun spawnMerlin(player: Player) {
             val merlin = MerlinNPC(NPCs.MERLIN_213)
-            merlin.location = Location.create(2750, 3505, 2)
+            merlin.location = Location.create(SAFE_X, SAFE_Y, SAFE_Z)
             merlin.isWalks = false
             merlin.isAggressive = false
-            merlin.isActive = false
-
-            if (merlin.asNpc() != null && merlin.isActive) {
-                merlin.properties.teleportLocation = merlin.properties.spawnLocation
-            }
             merlin.isActive = true
-            Pulser.submit(
-                object : Pulse(1, merlin) {
-                    override fun pulse(): Boolean {
-                        merlin.init()
-                        face(findLocalNPC(player, NPCs.MERLIN_213)!!, player, 3)
-                        face(player, findLocalNPC(player, NPCs.MERLIN_213)!!)
-                        openDialogue(player, MerlinDialogue())
-                        return true
-                    }
-                },
-            )
+
+            Pulser.submit(object : Pulse(1, merlin) {
+                override fun pulse(): Boolean {
+                    merlin.init()
+                    face(findLocalNPC(player, NPCs.MERLIN_213) ?: return true, player, 3)
+                    face(player, findLocalNPC(player, NPCs.MERLIN_213) ?: return true)
+                    openDialogue(player, MerlinDialogue())
+                    return true
+                }
+            })
         }
     }
 }
-
