@@ -67,7 +67,7 @@ public abstract class IdleAbstractNPC extends AbstractNPC {
                 ((Player) entity).getPacketDispatch().sendMessage("You need a higher slayer level to know how to wound this monster.");
             }
         }
-        if (DeathTask.Companion.isDead(this)) {
+        if (DeathTask.isDead(this)) {
             return false;
         }
         if (!entity.getZoneMonitor().continueAttack(this, style, message)) {

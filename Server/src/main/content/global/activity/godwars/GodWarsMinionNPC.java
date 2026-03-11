@@ -47,7 +47,7 @@ public final class GodWarsMinionNPC extends AbstractNPC {
         if (boss != null && boss.inCombat()) {
             Entity target = boss.getAttribute("combat-attacker");
             if (target != null && (target != getProperties().getCombatPulse().getVictim() || !getProperties().getCombatPulse().isAttacking())) {
-                if (!getProperties().getCombatPulse().isAttacking() && !DeathTask.Companion.isDead(this)) {
+                if (!getProperties().getCombatPulse().isAttacking() && !DeathTask.isDead(this)) {
 
                 } else {
                     getProperties().getCombatPulse().setVictim(target);

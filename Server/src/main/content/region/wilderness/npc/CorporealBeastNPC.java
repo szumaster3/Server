@@ -144,7 +144,7 @@ public final class CorporealBeastNPC extends NPCBehavior {
         }
 
         private void rollDarkCore(Entity corp, final CorporealBeastNPC npc, Entity victim) {
-            if (npc.darkEnergyCore != null && npc.darkEnergyCore.isActive() && !DeathTask.Companion.isDead(npc.darkEnergyCore)) {
+            if (npc.darkEnergyCore != null && npc.darkEnergyCore.isActive() && !DeathTask.isDead(npc.darkEnergyCore)) {
                 return;
             }
             if (!RandomFunction.roll(8)) {

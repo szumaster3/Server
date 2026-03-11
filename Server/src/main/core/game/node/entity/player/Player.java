@@ -995,7 +995,7 @@ public class Player extends Entity {
      * @return the boolean
      */
     public boolean allowRemoval() {
-        return !(inCombat() || getSkills().getLifepoints() < 1 || DeathTask.Companion.isDead(this) || isTeleporting() || scripts.hasTypeInQueue(QueueStrength.SOFT));
+        return !(inCombat() || getSkills().getLifepoints() < 1 || DeathTask.isDead(this) || isTeleporting() || scripts.hasTypeInQueue(QueueStrength.SOFT));
     }
 
     /**

@@ -35,7 +35,7 @@ public final class GodWarsNPC extends AbstractNPC {
 
         @Override
         public boolean canSelectTarget(Entity entity, Entity target) {
-            if (!target.isActive() || DeathTask.Companion.isDead(target) || DeathTask.Companion.isDead(entity)) {
+            if (!target.isActive() || DeathTask.isDead(target) || DeathTask.isDead(entity)) {
                 return false;
             }
             if (!target.getProperties().isMultiZone() && target.inCombat()) {

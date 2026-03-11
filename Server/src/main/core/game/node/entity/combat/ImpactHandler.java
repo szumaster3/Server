@@ -168,7 +168,7 @@ public final class ImpactHandler {
      * @return The impact object created.
      */
     public Impact handleImpact(Entity source, int hit, final CombatStyle style, final BattleState state, HitsplatType type, boolean secondary) {
-        if (DeathTask.Companion.isDead(this.entity)) {
+        if (DeathTask.isDead(this.entity)) {
             this.entity.getProperties().getCombatPulse().setVictim(null);
             this.entity.getProperties().getCombatPulse().stop();
             return null;

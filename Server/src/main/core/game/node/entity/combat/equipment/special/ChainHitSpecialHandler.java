@@ -90,7 +90,7 @@ public final class ChainHitSpecialHandler extends RangeSwingHandler implements P
                     if (n == null) {
                         continue;
                     }
-                    if (DeathTask.Companion.isDead(n) || n.getId() != n.getOriginalId()) {
+                    if (DeathTask.isDead(n) || n.getId() != n.getOriginalId()) {
                         continue;
                     }
                     Projectile.ranged(victim, n, 258, 40, 36, 32, 11).send();

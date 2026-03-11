@@ -32,7 +32,7 @@ public class AggressiveBehavior {
             if (target.isInvisible()) {
                 return false;
             }
-            if (!target.isActive() || DeathTask.Companion.isDead(target)) {
+            if (!target.isActive() || DeathTask.isDead(target)) {
                 return false;
             }
             if (!entity.canSelectTarget(target)) {
@@ -66,7 +66,7 @@ public class AggressiveBehavior {
      */
     public boolean canSelectTarget(Entity entity, Entity target) {
         int regionId = target.getLocation().getRegionId();
-        if (!target.isActive() || DeathTask.Companion.isDead(target)) {
+        if (!target.isActive() || DeathTask.isDead(target)) {
             return false;
         }
         if (!target.getProperties().isMultiZone() && target.inCombat()) {

@@ -76,7 +76,7 @@ public final class AggressiveHandler {
         if (pauseTicks > GameWorld.getTicks() || entity.getLocks().isInteractionLocked()) {
             return false;
         }
-        if ((!targetSwitching && entity.getProperties().getCombatPulse().isAttacking()) || DeathTask.Companion.isDead(entity)) {
+        if ((!targetSwitching && entity.getProperties().getCombatPulse().isAttacking()) || DeathTask.isDead(entity)) {
             return false;
         }
         if (RandomFunction.randomize(10) > chanceRatio) {

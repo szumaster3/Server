@@ -58,7 +58,7 @@ public final class QuickSmashSpecialHandler extends MeleeSwingHandler implements
                 return -1;
             }
         }
-        if (DeathTask.Companion.isDead(victim)) {
+        if (DeathTask.isDead(victim)) {
             return -1;
         }
         if (!p.getSettings().drainSpecial(SPECIAL_ENERGY)) {

@@ -361,7 +361,7 @@ public abstract class Entity extends Node {
      * @param state  the state
      */
     public void onImpact(final Entity entity, BattleState state) {
-        if (DeathTask.Companion.isDead(this)) state.neutralizeHits();
+        if (DeathTask.isDead(this)) state.neutralizeHits();
         if (this instanceof NPC) {
             ((NPC) this).behavior.afterDamageReceived((NPC) this, entity, state);
         }
@@ -473,7 +473,7 @@ public abstract class Entity extends Node {
      * @return the boolean
      */
     public boolean isAttackable(Entity entity, CombatStyle style, boolean message) {
-        if (DeathTask.Companion.isDead(this)) {
+        if (DeathTask.isDead(this)) {
             return false;
         }
         if (!entity.getZoneMonitor().continueAttack(this, style, message)) {
@@ -650,7 +650,7 @@ public abstract class Entity extends Node {
      */
     public void startDeath(Entity killer) {
         if (zoneMonitor.startDeath(this, killer)) {
-            DeathTask.Companion.startDeath(this, killer);
+            DeathTask.startDeath(this, killer);
         }
     }
 
