@@ -1,6 +1,6 @@
 package content.region.other.entrana.quest.zep.dialogue
 
-import content.data.Dyes
+import content.data.items.DyeItem
 import content.region.other.entrana.quest.zep.cutscene.ExperimentCutscene
 import core.api.*
 import core.game.dialogue.*
@@ -9,7 +9,6 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.GameWorld
-import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.*
@@ -23,7 +22,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
         val hasWool = inInventory(player!!, Items.BALL_OF_WOOL_1759, 1)
         val hasPotatoes = inInventory(player!!, Items.POTATOES10_5438, 1)
 
-        val hasDyedBalloon = Dyes.values().map { it.origamiBallonId }.toIntArray()
+        val hasDyedBalloon = DyeItem.values().map { it.origamiBallonId }.toIntArray()
         val hasPlain = inInventory(player, Items.ORIGAMI_BALLOON_9934)
         val hasDyed = anyInInventory(player, *hasDyedBalloon)
 

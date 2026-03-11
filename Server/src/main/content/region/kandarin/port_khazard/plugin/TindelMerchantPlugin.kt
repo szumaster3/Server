@@ -1,6 +1,6 @@
 package content.region.kandarin.port_khazard.plugin
 
-import content.data.RustyEquipment
+import content.data.items.RustyItem
 import content.region.kandarin.port_khazard.dialogue.TindelMerchantDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
@@ -45,8 +45,8 @@ class TindelMerchantPlugin : InteractionListener {
 
         fun exchangeRustyWeapon(player: Player) {
             val weaponToType = mapOf(
-                SWORD to RustyEquipment.EquipmentType.SWORDS,
-                SCIMITAR to RustyEquipment.EquipmentType.SCIMITARS
+                SWORD to RustyItem.EquipmentType.SWORDS,
+                SCIMITAR to RustyItem.EquipmentType.SCIMITARS
             )
 
             val weaponEntry = weaponToType.entries.firstOrNull { player.inventory.contains(it.key, 1) }
@@ -66,7 +66,7 @@ class TindelMerchantPlugin : InteractionListener {
             sendDoubleItemDialogue(player, weaponId, Items.COINS_8896, "You hand Tindel 100 coins plus the ${getItemName(weaponId).lowercase()}.")
 
             addDialogueAction(player) { _, _ ->
-                val repaired = RustyEquipment.getRepair(equipType)
+                val repaired = RustyItem.getRepair(equipType)
                     ?: return@addDialogueAction
 
                 if (!removeItem(player, Item(COINS, COINS_REQUIRED)) ||

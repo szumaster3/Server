@@ -1,6 +1,6 @@
 package core.game.node.entity.combat
 
-import content.data.ChargedItem
+import content.data.items.ChargedItem
 import content.global.skill.slayer.SlayerEquipmentFlags.getDamAccBonus
 import core.api.*
 import core.game.container.impl.EquipmentContainer

@@ -1,6 +1,6 @@
 package content.global.plugins.inter.with_item
 
-import content.data.Dyes
+import content.data.items.DyeItem
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -15,9 +15,9 @@ import shared.consts.Items
 class ItemColoringPlugin : InteractionListener {
 
     companion object {
-        private val DYES = Dyes.values().map { it.dyeId }.toIntArray()
-        private val CAPES = Dyes.values().map { it.capeId }.toIntArray()
-        private val GOBLIN_MAIL = Dyes.values().map { it.goblinMailId }.toIntArray()
+        private val DYES = DyeItem.values().map { it.dyeId }.toIntArray()
+        private val CAPES = DyeItem.values().map { it.capeId }.toIntArray()
+        private val GOBLIN_MAIL = DyeItem.values().map { it.goblinMailId }.toIntArray()
     }
 
     override fun defineListeners() {
@@ -28,15 +28,15 @@ class ItemColoringPlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, DYES, *DYES) { player, used, with ->
 
-            val first = Dyes.forId(used.id) ?: return@onUseWith false
-            val second = Dyes.forId(with.id) ?: return@onUseWith false
+            val first = DyeItem.forId(used.id) ?: return@onUseWith false
+            val second = DyeItem.forId(with.id) ?: return@onUseWith false
 
             if (first == second) return@onUseWith false
 
             val mix = when (setOf(first, second)) {
-                setOf(Dyes.RED, Dyes.YELLOW)  -> Dyes.ORANGE
-                setOf(Dyes.YELLOW, Dyes.BLUE) -> Dyes.GREEN
-                setOf(Dyes.RED, Dyes.BLUE)    -> Dyes.PURPLE
+                setOf(DyeItem.RED, DyeItem.YELLOW)  -> DyeItem.ORANGE
+                setOf(DyeItem.YELLOW, DyeItem.BLUE) -> DyeItem.GREEN
+                setOf(DyeItem.RED, DyeItem.BLUE)    -> DyeItem.PURPLE
                 else -> {
                     sendMessage(player, "Those dyes don't mix together.")
                     return@onUseWith true
@@ -59,7 +59,7 @@ class ItemColoringPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, DYES, *CAPES) { player, used, with ->
-            val dye = Dyes.forId(used.id) ?: return@onUseWith false
+            val dye = DyeItem.forId(used.id) ?: return@onUseWith false
             if (!removeItem(player, Item(dye.dyeId))) return@onUseWith false
             replaceSlot(player, with.asItem().slot, Item(dye.capeId))
             sendMessage(player, "You dye the cape ${dye.name.lowercase()}.")
@@ -71,7 +71,7 @@ class ItemColoringPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, DYES, *(GOBLIN_MAIL + Items.GOBLIN_MAIL_288)) { player, used, with ->
-            val dye = Dyes.forId(used.id) ?: return@onUseWith false
+            val dye = DyeItem.forId(used.id) ?: return@onUseWith false
             when (with.id) {
 
                 Items.GOBLIN_MAIL_288 -> {

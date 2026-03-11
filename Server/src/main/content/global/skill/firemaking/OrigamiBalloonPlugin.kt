@@ -1,6 +1,6 @@
 package content.global.skill.firemaking
 
-import content.data.Dyes
+import content.data.items.DyeItem
 import core.api.*
 import core.game.interaction.Clocks
 import core.game.interaction.IntType
@@ -58,7 +58,7 @@ class OrigamiBalloonPlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, DYE_IDS, Items.ORIGAMI_BALLOON_9934) { player, used, balloon ->
 
-            val dye = Dyes.forId(used.id) ?: return@onUseWith true
+            val dye = DyeItem.forId(used.id) ?: return@onUseWith true
             val maxAmount = min(amountInInventory(player, dye.dyeId), amountInInventory(player, balloon.id))
 
             if (maxAmount == 0) return@onUseWith true
@@ -125,11 +125,11 @@ class OrigamiBalloonPlugin : InteractionListener {
         /**
          * The dyes.
          */
-        private val DYE_IDS = Dyes.values().map { it.dyeId }.toIntArray()
+        private val DYE_IDS = DyeItem.values().map { it.dyeId }.toIntArray()
 
         /**
          * The coloured origami balloons.
          */
-        private val BALLOON_IDS = (Dyes.values().map { it.origamiBallonId } + Items.ORIGAMI_BALLOON_9934).toIntArray()
+        private val BALLOON_IDS = (DyeItem.values().map { it.origamiBallonId } + Items.ORIGAMI_BALLOON_9934).toIntArray()
     }
 }

@@ -1,5 +1,6 @@
 package core.game.node.entity.combat.graves
 
+import content.global.plugins.item.equipment.BarrowsEquipment
 import core.api.clearHintIcon
 import core.api.registerHintIcon
 import core.api.sendMessage
@@ -70,7 +71,11 @@ class Grave : AbstractNPC {
                 continue
             }
 
-            val finalItem = GraveController.checkTransform(item)
+            val finalItem = if (BarrowsEquipment.isBarrowsItem(item.id) && !BarrowsEquipment.isFullyRepaired(item.id)) {
+                BarrowsEquipment.graveDeathDurabilityReduction(item) ?: item
+            } else {
+                GraveController.checkTransform(item)
+            }
 
             val gi = GroundItemManager.create(finalItem, this.location, player)
             gi.isRemainPrivate = true

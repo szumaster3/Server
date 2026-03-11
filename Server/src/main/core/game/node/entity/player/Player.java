@@ -1,6 +1,7 @@
 package core.game.node.entity.player;
 
 import content.data.RespawnPoint;
+import content.global.plugins.item.equipment.BarrowsEquipment;
 import content.global.plugins.item.equipment.EquipmentDegrade;
 import content.global.plugins.item.equipment.bolt_pouch.BoltPouchManager;
 import content.global.skill.construction.HouseManager;
@@ -715,7 +716,7 @@ public class Player extends Entity {
                         continue;
                     if (GraveController.shouldRelease(item.getId()))
                         continue;
-                    if (!item.getDefinition().isTradeable()) {
+                    if (!BarrowsEquipment.isBarrowsItem(item.getId()) && !item.getDefinition().isTradeable()) {
                         if (killer instanceof Player) {
                             int value = item.getDefinition().getAlchemyValue(true);
                             if (getStatLevel(killer, Skills.MAGIC) < 55) value /= 2;
@@ -723,7 +724,14 @@ public class Player extends Entity {
                             continue;
                         } else stayPrivate = true;
                     }
-                    item = GraveController.checkTransform(item);
+                    if (BarrowsEquipment.isBarrowsItem(item.getId())) {
+                        if (!BarrowsEquipment.isBroken(item.getId())) {
+                            int brokenItemId = Objects.requireNonNull(BarrowsEquipment.getDefinition(item.getId())).getBrokenId();
+                            item = new Item(brokenItemId, item.getAmount());
+                        }
+                    } else {
+                        item = GraveController.checkTransform(item);
+                    }
                     GroundItem gi = GroundItemManager.create(item, location, killer instanceof Player ? (Player) killer : this);
                     gi.setRemainPrivate(stayPrivate);
                 }

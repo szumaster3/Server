@@ -1,6 +1,6 @@
 package content.global.plugins.item
 
-import content.data.Lamps
+import content.data.items.LampItem
 import core.api.*
 import core.game.component.Component
 import core.game.interaction.IntType
@@ -13,7 +13,7 @@ import shared.consts.Components
 import shared.consts.Items
 
 class ExperienceLampOptionPlugin : InteractionListener {
-    private val xpGainItems = Lamps.values().map { it.item }.toIntArray()
+    private val xpGainItems = LampItem.values().map { it.item }.toIntArray()
 
     override fun defineListeners() {
         /*
@@ -24,7 +24,7 @@ class ExperienceLampOptionPlugin : InteractionListener {
             setAttribute(player, "caller") { skill: Int, _: Player ->
                 player.lock()
                 setAttribute(player, "xp_reward_item", node)
-                val lamp = Lamps.forItem(player.getAttribute("xp_reward_item", Item(Items.LAMP_2528)))
+                val lamp = LampItem.forItem(player.getAttribute("xp_reward_item", Item(Items.LAMP_2528)))
                 if (lamp == null) {
                     sendMessage(player, "This lamp cannot be used.")
                     return@setAttribute
@@ -37,7 +37,7 @@ class ExperienceLampOptionPlugin : InteractionListener {
 
                 val itemToRemove = player.getAttribute<Any>("xp_reward_item") as? Item
                 if (itemToRemove != null && removeItem(player, itemToRemove)) {
-                    val xp = if (lamp == Lamps.RANDOM_EVENT_LAMP_0) getStatLevel(player, skill) * 10 else lamp.experience
+                    val xp = if (lamp == LampItem.RANDOM_EVENT_LAMP_0) getStatLevel(player, skill) * 10 else lamp.experience
                     rewardXP(player, skill, xp.toDouble())
 
                     val messageTitle = if (lamp.item in intArrayOf(

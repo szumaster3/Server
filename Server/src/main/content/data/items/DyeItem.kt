@@ -1,8 +1,8 @@
-package content.data
+package content.data.items
 
 import shared.consts.Items
 
-enum class Dyes(val dyeId: Int, val capeId: Int, val goblinMailId: Int, val origamiBallonId : Int) {
+enum class DyeItem(val dyeId: Int, val capeId: Int, val goblinMailId: Int, val origamiBallonId : Int) {
     BLACK(Items.BLACK_MUSHROOM_INK_4622, Items.BLACK_CAPE_1019, Items.BLACK_GOBLIN_MAIL_9055, Items.BLACK_BALLOON_9942),
     RED(Items.RED_DYE_1763, Items.RED_CAPE_1007, Items.RED_GOBLIN_MAIL_9054, Items.RED_BALLOON_9937),
     YELLOW(Items.YELLOW_DYE_1765, Items.YELLOW_CAPE_1023, Items.YELLOW_GOBLIN_MAIL_9056, Items.YELLOW_BALLOON_9935),

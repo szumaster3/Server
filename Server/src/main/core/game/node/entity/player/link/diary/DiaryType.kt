@@ -1,6 +1,6 @@
 package core.game.node.entity.player.link.diary
 
-import content.data.Lamps
+import content.data.items.LampItem
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import shared.consts.Items
@@ -70,9 +70,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.KARAMJA_GLOVES_1_11136), Item(Lamps.KARAMJA_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.KARAMJA_GLOVES_2_11138), Item(Lamps.KARAMJA_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.KARAMJA_GLOVES_3_11140), Item(Lamps.KARAMJA_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.KARAMJA_GLOVES_1_11136), Item(LampItem.KARAMJA_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.KARAMJA_GLOVES_2_11138), Item(LampItem.KARAMJA_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.KARAMJA_GLOVES_3_11140), Item(LampItem.KARAMJA_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to Pirate<br><br>Jackie the Fruit in Brimhaven, Kaleb Paramay in Shilo<br><br>Village or one of the Jungle Foresters north of the<br><br>Kharazi Jungle.",
         intArrayOf(NPCs.PIRATE_JACKIE_THE_FRUIT_1055, NPCs.KALEB_PARAMAYA_512, NPCs.JUNGLE_FORESTER_401)
@@ -143,9 +143,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.VARROCK_ARMOUR_1_11756), Item(Lamps.VARROCK_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.VARROCK_ARMOUR_2_11757), Item(Lamps.VARROCK_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.VARROCK_ARMOUR_3_11758), Item(Lamps.VARROCK_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.VARROCK_ARMOUR_1_11756), Item(LampItem.VARROCK_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.VARROCK_ARMOUR_2_11757), Item(LampItem.VARROCK_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.VARROCK_ARMOUR_3_11758), Item(LampItem.VARROCK_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>Rat Burgiss south of the city, Reldo in the palace<br><br>library, or Vannaka in the sewers.",
         intArrayOf(NPCs.RAT_BURGISS_5833, NPCs.RELDO_2660, NPCs.VANNAKA_1597)
@@ -215,9 +215,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.EXPLORERS_RING_1_13560), Item(Lamps.LUMBRIDGE_ACHIEVEMENT_BEGINNER.item)),
-            arrayOf(Item(Items.EXPLORERS_RING_2_13561), Item(Lamps.LUMBRIDGE_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.EXPLORERS_RING_3_13562), Item(Lamps.LUMBRIDGE_ACHIEVEMENT_MEDIUM.item))
+            arrayOf(Item(Items.EXPLORERS_RING_1_13560), Item(LampItem.LUMBRIDGE_ACHIEVEMENT_BEGINNER.item)),
+            arrayOf(Item(Items.EXPLORERS_RING_2_13561), Item(LampItem.LUMBRIDGE_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.EXPLORERS_RING_3_13562), Item(LampItem.LUMBRIDGE_ACHIEVEMENT_MEDIUM.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>Explorer Jack near the Lumbridge General Store, Bob<br><br>in his axe store or Ned in his house in Draynor Village.",
         intArrayOf(NPCs.EXPLORER_JACK_7969, NPCs.BOB_519, NPCs.NED_743)
@@ -272,9 +272,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.FALADOR_SHIELD_1_14577), Item(Lamps.FALADOR_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.FALADOR_SHIELD_2_14578), Item(Lamps.FALADOR_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.FALADOR_SHIELD_3_14579), Item(Lamps.FALADOR_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.FALADOR_SHIELD_1_14577), Item(LampItem.FALADOR_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.FALADOR_SHIELD_2_14578), Item(LampItem.FALADOR_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.FALADOR_SHIELD_3_14579), Item(LampItem.FALADOR_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>Redbeard Frank outside the bar in Port Sarim, The<br><br>Chemist west of Rimmington, or Sir Vyvin's Squire in the<br><br>Falador Castle courtyard.",
         intArrayOf(NPCs.REDBEARD_FRANK_375, NPCs.CHEMIST_367, NPCs.SQUIRE_606)
@@ -322,9 +322,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_1_14571), Item(Lamps.FREMENNIK_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_2_14572), Item(Lamps.FREMENNIK_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_3_14573), Item(Lamps.FREMENNIK_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_1_14571), Item(LampItem.FREMENNIK_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_2_14572), Item(LampItem.FREMENNIK_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.FREMENNIK_SEA_BOOTS_3_14573), Item(LampItem.FREMENNIK_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>Council Workman on the bridge between the Seers' Village<br><br>and Rellekka, Yrsa in Rellekka or Advisor Ghrim on the<br><br>Miscellania.",
         intArrayOf(NPCs.COUNCIL_WORKMAN_1287, NPCs.YRSA_1301, NPCs.ADVISOR_GHRIM_1375)
@@ -377,9 +377,9 @@ enum class DiaryType(
             )
         ),
         arrayOf(
-            arrayOf(Item(Items.SEERS_HEADBAND_1_14631), Item(Lamps.SEERS_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.SEERS_HEADBAND_2_14640), Item(Lamps.SEERS_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.SEERS_HEADBAND_3_14641), Item(Lamps.SEERS_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.SEERS_HEADBAND_1_14631), Item(LampItem.SEERS_ACHIEVEMENT_EASY.item)),
+            arrayOf(Item(Items.SEERS_HEADBAND_2_14640), Item(LampItem.SEERS_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.SEERS_HEADBAND_3_14641), Item(LampItem.SEERS_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>any seer in Seers' Village, Stankers by the coal<br><br>trucks or Sir Kay in Camelot.",
         intArrayOf(NPCs.SEER_388, NPCs.STANKERS_383, NPCs.SIR_KAY_241)

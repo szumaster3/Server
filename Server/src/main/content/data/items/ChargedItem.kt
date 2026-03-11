@@ -1,4 +1,4 @@
-package content.data
+package content.data.items
 
 import core.api.toIntArray
 import core.cache.def.impl.ItemDefinition

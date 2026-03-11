@@ -1,4 +1,4 @@
-package content.data
+package content.data.items
 
 import core.game.node.item.Item
 import core.game.node.item.WeightedChanceItem
@@ -8,7 +8,7 @@ import shared.consts.Items
 /**
  * Represents rusty equipment.
  */
-object RustyEquipment {
+object RustyItem {
 
     private val repairTables: Map<EquipmentType, List<WeightedChanceItem>> = mapOf(
         EquipmentType.ARROWS to listOf(

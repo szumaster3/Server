@@ -1,4 +1,4 @@
-package content.data.skill
+package content.data.items
 
 import core.game.node.item.Item
 import shared.consts.Items
@@ -7,7 +7,7 @@ import shared.consts.Items
  * Represents a repairable item, its repaired product, and the repair cost.
  * @author szu
  */
-enum class RepairableSkillingTool(
+enum class RepairItem(
     @JvmField val item: Item,
     @JvmField val product: Item,
     @JvmField val cost: Int,
@@ -44,15 +44,13 @@ enum class RepairableSkillingTool(
     ;
 
     companion object {
-        private val BY_ITEM_ID: Map<Int, RepairableSkillingTool> = values().associateBy { it.item.id }
+        @JvmStatic
+        val repairableItemIds: List<Int> = values().map { it.item.id }
 
         /**
-         * Finds a [RepairableSkillingTool] by item id.
-         *
-         * @param id Item id.
-         * @return The repaired item or null if not found.
+         * Gets the repair item by the broken items ID.
          */
         @JvmStatic
-        fun forId(id: Int): RepairableSkillingTool? = BY_ITEM_ID[id]
+        fun forId(id: Int): RepairItem? = values().firstOrNull { it.item.id == id }
     }
 }

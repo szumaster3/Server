@@ -1,4 +1,4 @@
-package content.data
+package content.data.items
 
 import core.game.node.item.Item
 import shared.consts.Items
@@ -6,7 +6,7 @@ import shared.consts.Items
 /**
  * Represents an experience lamp.
  */
-enum class Lamps(val item: Int, val experience: Int, val requiredLevel: Int = 0) {
+enum class LampItem(val item: Int, val experience: Int, val requiredLevel: Int = 0) {
 
     // Quest lamps.
     STRONGHOLD_LAMP(Items.ANTIQUE_LAMP_4447, 500),
@@ -66,7 +66,7 @@ enum class Lamps(val item: Int, val experience: Int, val requiredLevel: Int = 0)
          * Get lamp for give item id.
          */
         @JvmStatic
-        fun forItem(item: Item): Lamps? {
+        fun forItem(item: Item): LampItem? {
             for (lamp in values()) {
                 if (lamp.item == item.id) {
                     return lamp
