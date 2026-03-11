@@ -53,7 +53,7 @@ class GravediggerPlugin : InteractionListener {
         private const val GRAVESTONE_INTERFACE = Components.GRAVEDIGGER_GRAVE_143
         private const val MAUSOLEUM = Scenery.MAUSOLEUM_12731
         private val ANIMATION = Animation(Animations.HUMAN_BURYING_BONES_827)
-
+        private val EVENT_ZONE = ZoneBorders(1921, 4993, 1934, 5006)
         private val COFFIN_SETS = CoffinSet.values()
         private val COFFIN_MAP = COFFIN_SETS.associateBy { it.coffinId }
         private val GRAVESTONE_MAP = COFFIN_SETS.associateBy { it.gravestoneId }
@@ -72,7 +72,7 @@ class GravediggerPlugin : InteractionListener {
 
         fun reset(player: Player) {
             COFFIN_SETS.forEach {
-                removeAttributes(player, "coffin_used:${it.coffinId}", "coffin_set:${it.name}")
+                removeAttributes(player, "coffin_set:${it.name}")
             }
         }
 
@@ -100,7 +100,7 @@ class GravediggerPlugin : InteractionListener {
         on(COFFIN_IDS, IntType.ITEM, "check") { player, item ->
             COFFIN_MAP[item.id]?.let { set ->
                 openInterface(player, COFFIN_INTERFACE)
-                set.content.take(9).forEachIndexed { index, itemId ->
+                set.content.forEachIndexed { index, itemId ->
                     sendItemOnInterface(player, COFFIN_INTERFACE, index + 3, itemId, 1)
                 }
             }
@@ -148,11 +148,12 @@ class GravediggerPlugin : InteractionListener {
 
         onUseWith(IntType.SCENERY, COFFIN_IDS, *EMPTY_GRAVE_IDS) { player, used, target ->
             COFFIN_MAP[used.id]?.let { set ->
-                if (target.id == set.emptyGraveId && removeItem(player, used.asItem())) {
-                    player.incrementAttribute(GameAttributes.GRAVEDIGGER_SCORE, 1)
+                if (target.id == set.emptyGraveId) {
                     lock(player, 3)
                     queueScript(player, 1, QueueStrength.NORMAL) {
+                        if (!removeItem(player, used.asItem())) return@queueScript stopExecuting(player)
                         player.animate(ANIMATION)
+                        player.incrementAttribute(GameAttributes.GRAVEDIGGER_SCORE, 1)
                         replaceScenery(target.asScenery(), set.graveId, -1)
                         sendMessage(player, "You put the coffin into the grave.")
                         return@queueScript stopExecuting(player)
@@ -167,7 +168,7 @@ class GravediggerPlugin : InteractionListener {
          */
 
         onUseWith(IntType.SCENERY, WOODCUTTING_TOOLS, Scenery.DEAD_TREE_12732) { player, _, _ ->
-            if (inBorders(player, ZoneBorders(1921, 4993, 1934, 5006))) {
+            if (inBorders(player, EVENT_ZONE)) {
                 sendMessages(player, "You don't need any wood.", "What are you planning on doing, making them a fresh coffin?")
             }
             return@onUseWith true
