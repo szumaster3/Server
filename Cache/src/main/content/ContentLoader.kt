@@ -38,6 +38,6 @@ object ContentLoader {
 
     private fun interfaces()
     {
-        content.interfaces.spellbook_interface.add()
+        content.interfaces.CustomSpellBookInterface.add()
     }
 }
