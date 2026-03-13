@@ -89,7 +89,24 @@ object CustomSpellBookInterface {
                 comp.optionMask         = OptionMask.CAST_ON_SELF
                 comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
                 comp.hasScripts         = true
-                comp.onLoadScript       = arrayOf(6, -2147483645, 99999999999, Sprite.INVISIBLE_SPELL_LV2_ON, Sprite.INVISIBLE_SPELL_LV2_OFF, 70, "Invisible", "Become invisible for 10 seconds, avoiding opponent's attacks", Items.GHOSTLY_GLOVES_6110, 1, Items.STEAM_RUNE_4694, 8, -1, 0, -1, 0)
+                comp.onLoadScript       = arrayOf(
+                    6,
+                    -2147483645,
+                    99999999999,
+                    Sprite.INVISIBLE_SPELL_LV2_ON,
+                    Sprite.INVISIBLE_SPELL_LV2_OFF,
+                    70,
+                    "Invisible",
+                    "Become invisible for 10 seconds, avoiding opponent's attacks",
+                    Items.GHOSTLY_GLOVES_6110,
+                    1,
+                    Items.STEAM_RUNE_4694,
+                    8,
+                    -1,
+                    0,
+                    -1,
+                    0
+                )
             }).save()
 
         IfaceCopy.to(834)
@@ -147,6 +164,24 @@ object CustomSpellBookInterface {
                 comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
                 comp.hasScripts         = true
                 comp.onLoadScript       = arrayOf(6, -2147483645, 99999999999, Sprite.MISSION_TELEPORT_SPELL_ON, Sprite.MISSION_TELEPORT_SPELL_OFF, 25, "Guild Teleport", "Teleport you to Guild Warehouse", 99999999999, 1, Items.LAW_RUNE_563, 1, Items.AIR_RUNE_556, 1, -1, 0)
+            }).save()
+        IfaceCopy.to(834)
+            .startAt(6)
+            .addComponents(Consumer { comp ->
+                comp.name               = "create_food_spell"
+                comp.version            = 3
+                comp.parentId           = -1
+                comp.type               = ComponentType.SPRITE
+                comp.baseX              = 151
+                comp.baseY              = 36
+                comp.baseWidth          = 24
+                comp.baseHeight         = 24
+                comp.spriteId           = Sprite.MISSION_TELEPORT_SPELL_OFF
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.CAST_ON_SELF
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
+                comp.hasScripts         = true
+                comp.onLoadScript       = arrayOf(6, -2147483645, 99999999999, Sprite.MISSION_TELEPORT_SPELL_ON, Sprite.MISSION_TELEPORT_SPELL_OFF, 80, "Create Meat", "Creates random meat. Reduces Magic Level by 3.", Items.LAVA_RUNE_4699, 2, Items.NATURE_RUNE_561, 1, 0, -1, 0)
             }).save()
     }
 }
