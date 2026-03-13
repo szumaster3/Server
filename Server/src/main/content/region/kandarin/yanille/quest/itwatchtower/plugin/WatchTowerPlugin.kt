@@ -77,8 +77,7 @@ class WatchTowerPlugin : InteractionListener {
 
         bushes.forEach { (bush, item) ->
             on(bush, IntType.SCENERY, "search") { player, _ ->
-                lock(player, 3)
-                animate(player, 800)
+                lock(player, 1)
                 searchBush(player, item)
                 return@on true
             }

@@ -25,39 +25,47 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         val questStage = getQuestStage(player, Quests.WATCHTOWER)
-
         if (npc.id == NPCs.WIZARD_5195) {
+            if (questStage == 75) {
+                player(FaceAnim.HALF_ASKING, "Any chance of advice about this potion?")
+                stage = 905
+                return true
+            }
+
+            if (questStage == 85) {
+                player(FaceAnim.HALF_ASKING, "Any chance of a hand?")
+                stage = 947
+                return true
+            }
+
+            if (questStage == 95) {
+                player(FaceAnim.HALF_ASKING, "What should I do now?")
+                stage = 1300
+                return true
+            }
+
+            if (questStage == 100) {
+                npc("All's well that ends well.")
+                stage = END_DIALOGUE
+                return true
+            }
+
             player("What's going on here?")
             stage = 100
             return true
         }
 
-        if(questStage == 75 && npc.id == NPCs.WIZARD_5195) {
-            player(FaceAnim.HALF_ASKING, "Any chance of advice about this potion?")
-            stage = 905
-            return true
-        }
+        val itemIds = listOf(
+            Items.RELIC_PART_1_2373,
+            Items.RELIC_PART_2_2374,
+            Items.RELIC_PART_3_2375
+        )
 
-        if(questStage == 85 && npc.id == NPCs.WIZARD_5195) {
-            player(FaceAnim.HALF_ASKING, "Any chance of a hand?")
-            stage = 947
-            return true
-        }
-
-        if(questStage == 95 && npc.id == NPCs.WIZARD_5195) {
-            player(FaceAnim.HALF_ASKING, "What should I do now?")
-            stage = 1300
-            return true
-        }
-
-        if(questStage == 100 && npc.id == NPCs.WIZARD_5195) {
-            npc("All's well that ends well.")
-            stage = END_DIALOGUE
-            return true
-        }
-
-        val itemIds = listOf(Items.RELIC_PART_1_2373, Items.RELIC_PART_2_2374, Items.RELIC_PART_3_2375)
-        val attributes = listOf(GameAttributes.WATCHTOWER_RELIC_1, GameAttributes.WATCHTOWER_RELIC_2, GameAttributes.WATCHTOWER_RELIC_3)
+        val attributes = listOf(
+            GameAttributes.WATCHTOWER_RELIC_1,
+            GameAttributes.WATCHTOWER_RELIC_2,
+            GameAttributes.WATCHTOWER_RELIC_3
+        )
 
         val hasAll = itemIds.all { inInventory(player, it) }
         val turnedInAny = attributes.any { getAttribute(player, it, false) }
@@ -98,48 +106,51 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
 
-        if(questStage in 10..20) {
+        if (questStage in 10..20) {
             npc("Ah the warrior returns!")
             stage = 702
             return true
         }
 
-        if(questStage == 60) {
+        if (questStage == 60) {
             player("I have found the cave of ogre shaman, but I cannot", "touch them!")
             stage = 900
             return true
         }
 
-        if(questStage == 75) {
+        if (questStage == 75) {
             npc(FaceAnim.HALF_ASKING, "Any more news?")
             stage = 940
             return true
         }
 
-        if(questStage == 85) {
+        if (questStage == 85) {
             npc("Hello again. Did the potion work?")
             stage = 945
             return true
         }
 
-        if(questStage == 90) {
+        if (questStage == 90) {
             npc("Hello again. Did the potion work?")
             stage = 948
             return true
         }
-        if(questStage == 95 && !getAttribute(player, GameAttributes.WATCHTOWER_SYSTEM_ACTIVATED, false)) {
+
+        if (questStage == 95 && !getAttribute(player, GameAttributes.WATCHTOWER_SYSTEM_ACTIVATED, false)) {
             npc("The system is not activated yet. Throw the switch to start it.")
             stage = END_DIALOGUE
             return true
         }
 
-        if(getAttribute(player!!, GameAttributes.WATCHTOWER_RIDDLE, false) || inInventory(player!!, Items.SKAVID_MAP_2376)) {
+        if (getAttribute(player, GameAttributes.WATCHTOWER_RIDDLE, false) ||
+            inInventory(player, Items.SKAVID_MAP_2376)
+        ) {
             npc("How is the quest going?")
             stage = 800
             return true
         }
 
-        if(questStage == 100) {
+        if (questStage == 100) {
             npcl(FaceAnim.HAPPY, "Greetings, friend. I trust all is well with you? Yanille is safe at last!")
             stage = 1100
             return true

@@ -23,6 +23,7 @@ class GrewDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
+
         val questStage = getQuestStage(player, Quests.WATCHTOWER)
 
         if (questStage == 100) {
@@ -46,23 +47,24 @@ class GrewDialogue(player: Player? = null) : Dialogue(player) {
                 !inInventory(player, Items.CRYSTAL_2380) -> {
                     player("I've lost the crystal you gave me.")
                     stage = 50
-                    return true
                 }
                 !inInventory(player, Items.RELIC_PART_2_2374) -> {
                     player("I've lost the relic part you gave me.")
                     stage = 40
-                    return true
                 }
                 else -> {
                     player("Can I do anything else for you?")
                     stage = 30
-                    return true
                 }
             }
+            return true
         }
 
         if (questStage > 1) {
-            npc(FaceAnim.OLD_NEUTRAL, "What do you want, little morsel? You would look good", "on my plate!")
+            npc(FaceAnim.OLD_NEUTRAL,
+                "What do you want, little morsel? You would look good",
+                "on my plate!"
+            )
         } else {
             sendMessage(player, "The ogre has nothing to say at the moment...")
         }

@@ -42,15 +42,14 @@ class TobanDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
 
-        if(getAttribute(player, GameAttributes.WATCHTOWER_DRAGON_BONES, false)) {
+        if (getAttribute(player, GameAttributes.WATCHTOWER_DRAGON_BONES, false)) {
             npc(FaceAnim.OLD_NEUTRAL, "Hahaha! Small t'ing returns. Did you bring the dragon", "bone?")
             stage = 10
             return true
         }
 
-        if(questStage > 1) {
+        if (questStage > 1) {
             npc(FaceAnim.OLD_NEUTRAL, "What do you want, small t'ing?")
-            return true
         }
 
         return true

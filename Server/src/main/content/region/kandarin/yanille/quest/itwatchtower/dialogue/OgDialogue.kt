@@ -23,37 +23,41 @@ class OgDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        val questStage = getQuestStage(player, Quests.WATCHTOWER)
+        val stage = getQuestStage(player, Quests.WATCHTOWER)
 
-        if (questStage == 100) {
-            sendMessage(player, "The ogre is not interested in you anymore.")
-            return true
+        when {
+            stage == 100 -> {
+                sendMessage(player, "The ogre is not interested in you anymore.")
+                return true
+            }
+
+            stage == 0 -> {
+                sendMessage(player, "He's busy, try him later.")
+                return true
+            }
+
+            getAttribute(player, GameAttributes.WATCHTOWER_TOBAN_GOLD, false) -> {
+                npc(FaceAnim.OLD_DEFAULT, "Where my gold from dat dirty Toban?")
+                this.stage = 9
+                return true
+            }
+
+            getAttribute(player, GameAttributes.WATCHTOWER_RELIC_1, false) -> {
+                npc(FaceAnim.OLD_DEFAULT, "It's the little rat again.")
+                this.stage = 16
+                return true
+            }
+
+            stage == 2 -> {
+                npc(FaceAnim.OLD_DEFAULT, "Why you here, little t'ing?")
+                return true
+            }
+
+            else -> {
+                sendMessage(player, "The ogre has nothing to say at the moment.")
+                return true
+            }
         }
-
-        if (questStage == 0) {
-            sendMessage(player, "He's busy, try him later.")
-            return true
-        }
-
-        if (getAttribute(player, GameAttributes.WATCHTOWER_TOBAN_GOLD, false)) {
-            npc(FaceAnim.OLD_DEFAULT, "Where my gold from dat dirty Toban?")
-            stage = 9
-            return true
-        }
-
-        if (getAttribute(player, GameAttributes.WATCHTOWER_RELIC_1, false)) {
-            npc(FaceAnim.OLD_DEFAULT, "It's the little rat again.")
-            stage = 16
-            return true
-        }
-
-        if (questStage == 2) {
-            npc(FaceAnim.OLD_DEFAULT, "Why you here, little t'ing?")
-            return true
-        }
-
-        sendMessage(player, "The ogre has nothing to say at the moment.")
-        return true
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {

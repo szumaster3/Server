@@ -672,29 +672,7 @@ class BarbarianBook : InteractionListener {
     }
 
     private fun displayGuide(player: Player, guideType: GuideType) {
-        val guideContent = when (guideType) {
-            GuideType.FISH_BASE -> FISHING_BASICS
-            GuideType.FISH_FULL -> FISHING_COMPLETE
-            GuideType.BARE_H_BASE -> BAREHAND_BASICS
-            GuideType.BARE_H_FULL -> BAREHAND_COMPLETE
-            GuideType.FM_BASE -> FM_BOW_BASICS
-            GuideType.FM_FULL -> FM_BOW_COMPLETE
-            GuideType.PS_BASE -> PYRESHIP_BASICS
-            GuideType.PS_FULL -> PYRESHIP_COMPLETE
-            GuideType.H_BASE -> HERBLORE_BASICS
-            GuideType.H_FULL -> HERBLORE_COMPLETE
-            GuideType.FISH_FM_FULL -> FISHING_FM_COMPLETE
-            GuideType.FISH_FM_H_FULL -> FISHING_FM_HERBLORE_COMPLETE
-            GuideType.SMITH_N_REQS -> SMITHING_SPEAR_BASICS_NO_QUEST
-            GuideType.SMITH_M_REQS -> SMITHING_SPEAR_BASICS
-            GuideType.SMITH_S_FULL -> SMITHING_SPEAR_COMPLETE
-            GuideType.SMITH_H_BASE -> SMITHING_HASTAE_BASICS
-            GuideType.SMITH_H_FULL -> SMITHING_HASTAE_COMPLETE
-            else -> BARB_TRAINING_BASIC_PAGE
-        }
-        BookInterface.pageSetup(
-            player, BookInterface.FANCY_BOOK_26, TITLE, guideContent, false
-        )
+        BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_26, TITLE, guideType.content, false)
     }
 
     override fun defineListeners() {
@@ -713,7 +691,7 @@ class BarbarianBook : InteractionListener {
                 BarbarianTraining.HASTA_FULL to GuideType.SMITH_H_FULL,
             )
 
-            val attributes = barbarianAttributes.entries.filter { getAttribute(player, it.key, false) }.firstOrNull()
+            val attributes = barbarianAttributes.entries.firstOrNull { getAttribute(player, it.key, false) }
                 ?.let { it.key to it.value }
 
             val guideType = when {
@@ -756,7 +734,24 @@ class BarbarianBook : InteractionListener {
         }
     }
 
-    private enum class GuideType {
-        FISH_BASE, FISH_FULL, FM_BASE, FM_FULL, H_BASE, H_FULL, FISH_FM_FULL, FISH_FM_H_FULL, SMITH_N_REQS, SMITH_M_REQS, SMITH_S_FULL, SMITH_H_BASE, SMITH_H_FULL, PS_BASE, PS_FULL, BARE_H_BASE, BARE_H_FULL, DEFAULT,
+    private enum class GuideType(val content: Array<PageSet>) {
+        FISH_BASE(FISHING_BASICS),
+        FISH_FULL(FISHING_COMPLETE),
+        BARE_H_BASE(BAREHAND_BASICS),
+        BARE_H_FULL(BAREHAND_COMPLETE),
+        FM_BASE(FM_BOW_BASICS),
+        FM_FULL(FM_BOW_COMPLETE),
+        PS_BASE(PYRESHIP_BASICS),
+        PS_FULL(PYRESHIP_COMPLETE),
+        H_BASE(HERBLORE_BASICS),
+        H_FULL(HERBLORE_COMPLETE),
+        FISH_FM_FULL(FISHING_FM_COMPLETE),
+        FISH_FM_H_FULL(FISHING_FM_HERBLORE_COMPLETE),
+        SMITH_N_REQS(SMITHING_SPEAR_BASICS_NO_QUEST),
+        SMITH_M_REQS(SMITHING_SPEAR_BASICS),
+        SMITH_S_FULL(SMITHING_SPEAR_COMPLETE),
+        SMITH_H_BASE(SMITHING_HASTAE_BASICS),
+        SMITH_H_FULL(SMITHING_HASTAE_COMPLETE),
+        DEFAULT(BARB_TRAINING_BASIC_PAGE)
     }
 }

@@ -40,17 +40,10 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
             limitScrolling(player, line, true)
         }
 
-        if (stage == 1) {
+        if (stage >= 1) {
             line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
             line++
-            line(player, "I need to collect some !!evidence?? by searching the bushes.", line++)
-            line++
-        }
-
-        if (stage == 2) {
-            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
-            line(player, "I have spoken to !!Watchtower Wizard??.", line++, false)
-            line(player, "I need to collect some evidence by !!searching the bushes??.", line++, allInInventory(player, *evidences) || stage > 20)
+            line(player, "I need to collect some evidence by !!searching the bushes??.", line++, allInInventory(player, *evidences) || stage >= 2)
 
             if (evidences.all { inInventory(player, it) }) {
                 line(player, "I have collected all the evidences.", line++, true)
@@ -59,8 +52,6 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
                     val item = getItemName(itemId)
                     if (inInventory(player, itemId)) {
                         line(player, "I found some $item as evidence.", line++, true)
-                    } else {
-                        line(player, "!!I still need $item??", line++)
                     }
                 }
             }
@@ -92,7 +83,7 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
             line++
             line(player, "I have collected all the evidences.", line++, true)
             line++
-            line(player, "I was given !!a map?? by the guard.", line++, true)
+            line(player, "I was given a map by the guard.", line++, true)
             line++
             line(player, "I found my way into the skavid caves.", line++, true)
             line++
