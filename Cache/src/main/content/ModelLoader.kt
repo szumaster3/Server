@@ -13,20 +13,16 @@ object ModelLoader {
     @JvmStatic
     fun importModels() {
         val folder = File("../Assets/models/")
+
         if (!folder.exists() || !folder.isDirectory) return
-
-        val files = folder.listFiles { f -> f.extension.lowercase() == "dat" }?.sorted() ?: return
-        if (files.isEmpty()) return
-
-        var archiveId = modelIndex.lastArchiveId + 1
-
-        files.forEach { file ->
+        folder.walk().forEach { file ->
+            if (!file.isFile || file.extension.lowercase() != "dat") return@forEach
             try {
+                val id = file.nameWithoutExtension.toIntOrNull() ?: return@forEach
                 val data = Files.readAllBytes(file.toPath())
-                val id = file.nameWithoutExtension.toIntOrNull() ?: archiveId
                 modelIndex.putFile(id, 0, data)
-                archiveId++
             } catch (_: Exception) {
+
             }
         }
     }
