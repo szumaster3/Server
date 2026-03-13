@@ -9,6 +9,7 @@ import content.data.Sprite
 import shared.consts.Items
 import java.util.function.Consumer
 
+
 // TODO.
 object CustomSpellBookInterface {
 
@@ -344,5 +345,26 @@ object CustomSpellBookInterface {
                 comp.baseHeight         = 261
                 comp.settings           = IComponentSettings(-1, -1)
             }).save()
+
+
+
+
+        IfaceCopy.to(834)
+            .startAt(999999999)
+            .addComponents(Consumer { comp ->
+                comp.version            = 3
+                comp.type               = 5
+                comp.baseX              = 19
+                comp.baseY              = 92
+                comp.baseWidth          = 24
+                comp.baseHeight         = 24
+                comp.spriteId           = 999999999
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.CAST_ON_GROUND
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_GROUND, -1)
+                comp.hasScripts         = true
+                comp.onLoadScript       = arrayOf(6, -2147483645, tabLayer, -1, -1, 64, "Arctic Dig", "Allows you to dig up treasure in the snow without a spade", Items.ELEMENTAL_RUNE_12850, 4, Items.DUST_RUNE_4696, 3, -1, 0, -1, 0)
+            }).save()
+
     }
 }
