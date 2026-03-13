@@ -67,7 +67,7 @@ object spellbook_interface {
         Copy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
-                comp.name               = "invisible_spell"
+                comp.name               = "invisible_spell_lv1"
                 comp.version            = 3
                 comp.parentId           = parentID
                 comp.type               = ComponentType.SPRITE
@@ -102,7 +102,7 @@ object spellbook_interface {
         Copy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
-                comp.name               = "invisible_spell_v2"
+                comp.name               = "invisible_spell_lv2"
                 comp.version            = 3
                 comp.parentId           = parentID
                 comp.type               = ComponentType.SPRITE
@@ -137,7 +137,7 @@ object spellbook_interface {
         Copy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
-                comp.name               = "invisible_spell_v3"
+                comp.name               = "invisible_spell_lv3"
                 comp.version            = 3
                 comp.parentId           = parentID
                 comp.type               = ComponentType.SPRITE
@@ -163,6 +163,76 @@ object spellbook_interface {
                     1,
                     Items.STEAM_RUNE_4694,
                     12,
+                    -1,
+                    0
+                )
+            })
+            .save()
+
+        Copy.to(834)
+            .startAt(2)
+            .addComponents(Consumer { comp ->
+                comp.name               = "god_wars_dungeon_teleport"
+                comp.version            = 3
+                comp.parentId           = parentID
+                comp.type               = ComponentType.SPRITE
+                comp.baseX              = 0
+                comp.baseY              = 0
+                comp.baseWidth          = 24
+                comp.baseHeight         = 24
+                comp.spriteId           = -1
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.CAST_ON_SELF
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
+                comp.hasScripts         = true
+                comp.onLoadScript       = arrayOf(
+                    6,
+                    -2147483645,
+                    (parentID shl 16) or 0,
+                    -1,
+                    -1,
+                    99,
+                    "God Wars Dungeon Teleport",
+                    "Teleports you to God Wars Dungeon",
+                    14988,
+                    1,
+                    -1,
+                    0
+                )
+            })
+            .save()
+
+        Copy.to(834)
+            .startAt(2)
+            .addComponents(Consumer { comp ->
+                comp.name               = "guild_warehouse_teleport"
+                comp.version            = 3
+                comp.parentId           = parentID
+                comp.type               = ComponentType.SPRITE
+                comp.baseX              = 0
+                comp.baseY              = 0
+                comp.baseWidth          = 24
+                comp.baseHeight         = 24
+                comp.spriteId           = -1
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.CAST_ON_SELF
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
+                comp.hasScripts         = true
+                comp.onLoadScript       = arrayOf(
+                    6,
+                    -2147483645,
+                    (parentID shl 16) or 0,
+                    -1,
+                    -1,
+                    25,
+                    "Guild Teleport",
+                    "Teleport you to Guild Warehouse",
+                    -1,//gcape,
+                    1,
+                    Items.LAW_RUNE_563,
+                    1,
+                    Items.AIR_RUNE_556,
+                    1,
                     -1,
                     0
                 )
