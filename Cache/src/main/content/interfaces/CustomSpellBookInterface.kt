@@ -366,5 +366,39 @@ object CustomSpellBookInterface {
                 comp.onLoadScript       = arrayOf(6, -2147483645, tabLayer, -1, -1, 64, "Arctic Dig", "Allows you to dig up treasure in the snow without a spade", Items.ELEMENTAL_RUNE_12850, 4, Items.DUST_RUNE_4696, 3, -1, 0, -1, 0)
             }).save()
 
+        IfaceCopy.to(834)
+            .startAt(999999999)
+            .addComponents(Consumer { comp ->
+                comp.version            = 3
+                comp.type               = 5
+                comp.baseX              = 64
+                comp.baseY              = 92
+                comp.baseWidth          = 24
+                comp.baseHeight         = 24
+                comp.spriteId           = 999999999
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.CAST_ON_SELF
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
+                comp.hasScripts         = true
+                comp.onLoadScript       = arrayOf(
+                    6,
+                    -2147483645,
+                    tabLayer,
+                    -1,
+                    -1,
+                    86,
+                    "Arctic Agility",
+                    "Enchants your steps, allowing you to walk across ice",
+                    Items.MIST_RUNE_4695,
+                    2,
+                    Items.MIND_RUNE_558,
+                    20,
+                    Items.ICE_GLOVES_1580,
+                    1,
+                    -1,
+                    0
+                )
+            }).save()
+
     }
 }

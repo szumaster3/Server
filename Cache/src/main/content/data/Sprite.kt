@@ -23,4 +23,6 @@ object Sprite {
 
     const val CREATE_FOOD_SPELL_OFF = 1720
     const val CREATE_FOOD_SPELL_ON = 1721
+
+
 }
