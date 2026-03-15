@@ -1,12 +1,10 @@
 package content.region.kandarin.west_ardougne.plugin
 
 import content.global.skill.summoning.pets.Pets
-import core.api.addItem
-import core.api.removeItem
-import core.api.sendItemDialogue
-import core.api.sendNPCDialogue
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.diary.DiaryType
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -14,13 +12,16 @@ class CivilianCatPlugin : InteractionListener {
 
     override fun defineListeners() {
         onUseWith(IntType.NPC, GROWN_CATS, *CIVILIANS) { player, used, _ ->
-            if (removeItem(player, used.id)) {
-                Pets.forId(used.id)?.let {
-                    player.familiarManager.removeDetails(used.id)
-                }
-                addItem(player, Items.DEATH_RUNE_560, 100)
-                sendItemDialogue(player, Items.DEATH_RUNE_560, "You hand over the cat.<br>You are given 100 Death Runes.")
-            }
+            if (!removeItem(player, used.id)) return@onUseWith true
+            Pets.forId(used.id)?.let { player.familiarManager.removeDetails(used.id) }
+
+            val rewardAmount = if (isDiaryComplete(player, DiaryType.ARDOUGNE, 1)) 200 else 100
+            addItemOrDrop(player, Items.DEATH_RUNE_560, rewardAmount)
+            sendItemDialogue(
+                player,
+                Items.DEATH_RUNE_560,
+                "You hand over the cat.<br>You are given $rewardAmount Death Runes."
+            )
             return@onUseWith true
         }
 

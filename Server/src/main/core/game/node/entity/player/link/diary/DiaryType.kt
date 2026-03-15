@@ -460,29 +460,31 @@ enum class DiaryType(
         ),
         arrayOf(
 
-            // - Ability to teleport to the monastery south of Ardougne an unlimited number of times
-            // - Better chance at successful thieving in Ardougne
-            // - Twice as many death runes when trading a cat to a citizen in West Ardougne
-            // - More drops in the Tower of Life will become noted.
-            // - A boost of Prayer on entry to Castle Wars
+            // TODO:
+            //  - [x] Ability to teleport to the monastery south of Ardougne an unlimited number of times
+            //  - [ ] Better chance at successful thieving in Ardougne
+            //  - [x] Twice as many death runes when trading a cat to a citizen in West Ardougne
+            //  - [ ] More drops in the Tower of Life will become noted.
+            //  - [ ] A boost of Prayer on entry to Castle Wars
 
             arrayOf(Item(Items.ARDOUGNE_CLOAK_1_14701), Item(LampItem.ARDOUGNE_ACHIEVEMENT_EASY.item)),
 
-            // - Teleport to Ardougne Farm once per day.
-            // - Better chance at successful pickpocket in Ardougne.
-            // - Better chance at getting more runes at Ourania Altar.
-            // - Even more of the drops from the Tower of Life will be noted.
-            // - 100 Pure Essence per day from Wizard Cromperty.
-            // - Longer immunity from attack once teleporting to the wilderness from the Ardougne Lever.
-            // - Toggle Ring of life teleport to Ardougne.
+            // TODO:
+            //  - [x] Teleport to Ardougne Farm once per day.
+            //  - [ ] Better chance at successful pickpocket in Ardougne.
+            //  - [ ] Better chance at getting more runes at Ourania Altar.
+            //  - [ ] Even more of the drops from the Tower of Life will be noted.
+            //  - [ ] 100 Pure Essence per day from Wizard Cromperty.
+            //  - [ ] Longer immunity from attack once teleporting to the wilderness from the Ardougne Lever. (10 secs)
+            //  - [ ] Toggle Ring of life teleport to Ardougne.
 
             arrayOf(Item(Items.ARDOUGNE_CLOAK_2_14702), Item(LampItem.ARDOUGNE_ACHIEVEMENT_MEDIUM.item)),
-
-            // - Better chance at stealing and pickpocketing anywhere in RuneScape.
-            // - Magical traps on chests will teleport the player to Ardougne's North Bank, instead of a random location.
-            // - Even more drops from the creatures in the Tower of Life will be noted.
-            // - Wizard Cromperty will give 150 pure essence per day.
-            // - Ability to change the Watchtower teleport to take the player within Yanille's walls.
+            // TODO:
+            //  - [ ] Better chance at stealing and pickpocketing anywhere in RuneScape.
+            //  - [ ] Magical traps on chests will teleport the player to Ardougne's North Bank, instead of a random location.
+            //  - [ ] Even more drops from the creatures in the Tower of Life will be noted.
+            //  - [ ] Wizard Cromperty will give 150 pure essence per day.
+            //  - [ ] Ability to change the Watchtower teleport to take the player within Yanille's walls.
 
             arrayOf(Item(Items.ARDOUGNE_CLOAK_3_14703), Item(LampItem.ARDOUGNE_ACHIEVEMENT_HARD.item))
         ),
