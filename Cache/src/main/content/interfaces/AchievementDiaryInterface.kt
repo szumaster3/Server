@@ -45,7 +45,7 @@ object AchievementDiaryInterface {
                     this.baseY         = baseY + step * index
                     baseWidth          = 152
                     baseHeight         = 15
-                    fontId             = InterfaceFont.P12_FULL
+                    fontId             = InterfaceFont.P11_FULL
                     color              = Color.RED
                     text               = label
                     shadow             = true
