@@ -387,7 +387,7 @@ enum class DiaryType(
     ),
     ARDOUGNE(
         "Ardougne",
-        -1,
+        31,
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf( // Easy
