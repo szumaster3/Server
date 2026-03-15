@@ -3,6 +3,7 @@ package content.interfaces
 import com.alex.loaders.interfaces.ComponentType
 import com.alex.tools.IfaceCopy
 import content.data.Color
+import content.data.InterfaceFont
 import shared.consts.Components
 
 object AchievementDiaryInterface {
@@ -44,7 +45,7 @@ object AchievementDiaryInterface {
                     this.baseY         = baseY + step * index
                     baseWidth          = 152
                     baseHeight         = 15
-                    fontId             = 494
+                    fontId             = InterfaceFont.P12_FULL
                     color              = Color.RED
                     text               = label
                     shadow             = true
