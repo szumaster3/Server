@@ -68,7 +68,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
             getLocation(buttonID)
 
         closeAllInterfaces(player)
-        queueScript(player, 0, QueueStrength.SOFT) { stage ->
+        queueScript(player, 0, QueueStrength.NORMAL) { stage ->
             when (stage) {
                 0 -> {
                     player.impactHandler.disabledTicks = 4
